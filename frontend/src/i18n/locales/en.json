@@ -1,0 +1,171 @@
+{
+  "app": {
+    "tagline": "A moment for you"
+  },
+  "greeting": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening"
+  },
+  "welcome": {
+    "breathe": "Take a breath.",
+    "subtitle": "Let's check in with how you're feeling.",
+    "begin": "Begin check in"
+  },
+  "mood": {
+    "title": "How are you feeling?",
+    "subtitle": "Whatever it is, it's okay"
+  },
+  "moods": {
+    "low": "Low",
+    "lowDesc": "Heavy or drained",
+    "anxious": "Anxious",
+    "anxiousDesc": "Restless or overwhelmed",
+    "neutral": "Neutral",
+    "neutralDesc": "Just here, existing",
+    "hopeful": "Hopeful",
+    "hopefulDesc": "Quietly optimistic",
+    "energized": "Energized",
+    "energizedDesc": "Ready to move",
+    "other": "Other",
+    "otherDesc": "Name your feeling",
+    "otherLabelPlaceholder": "How do you feel?",
+    "otherDescPlaceholder": "Describe your emotion",
+    "saveAndGo": "Save and continue",
+    "justGo": "Continue without saving"
+  },
+  "quote": {
+    "feeling": "Feeling {mood}",
+    "changeMood": "Change mood",
+    "save": "Save",
+    "saved": "Saved",
+    "another": "Another one",
+    "continueMorning": "Continue with your day",
+    "continueAfternoon": "Keep focused",
+    "continueEvening": "Wind down"
+  },
+  "savedQuotes": {
+    "empty": "No saved quotes yet"
+  },
+  "habits": {
+    "title": "Your daily rituals",
+    "progress": "{done} of {total} done",
+    "emptySubtitle": "Start building your rituals",
+    "empty": "Add your first habit to get started",
+    "addHabit": "Add habit",
+    "namePlaceholder": "What's the habit?",
+    "descPlaceholder": "Why does it matter?",
+    "streakDays": "{count}d",
+    "goForIt": "Go for it",
+    "done": "Done",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "anytime": "Anytime",
+    "emptyMorning": "No morning rituals yet",
+    "emptyAfternoon": "No afternoon rituals yet",
+    "emptyEvening": "No evening rituals yet",
+    "emptyAnytime": "No rituals yet",
+    "chooseIcon": "Choose an icon",
+    "edit": "Edit",
+    "delete": "Delete",
+    "stats": "Progress"
+  },
+  "habitTemplates": {
+    "custom": "Create your own",
+    "categories": {
+      "health": "Health",
+      "mindfulness": "Mindfulness",
+      "productivity": "Productivity",
+      "selfCare": "Self-Care",
+      "social": "Social"
+    },
+    "health": {
+      "meditation": "Meditate",
+      "meditationDesc": "Quiet the mind, find stillness",
+      "exercise": "Move your body",
+      "exerciseDesc": "Any movement that feels good",
+      "hydration": "Drink water",
+      "hydrationDesc": "Stay hydrated throughout the day",
+      "sleep": "Wind-down routine",
+      "sleepDesc": "Prepare your body for restful sleep"
+    },
+    "mindfulness": {
+      "journaling": "Journal",
+      "journalingDesc": "Put your thoughts on paper",
+      "gratitude": "Practice gratitude",
+      "gratitudeDesc": "Notice three things you're thankful for",
+      "breathing": "Breathing exercise",
+      "breathingDesc": "Pause and take five deep breaths",
+      "bodyScan": "Body scan",
+      "bodyScanDesc": "Check in with how your body feels"
+    },
+    "productivity": {
+      "deepWork": "Deep work session",
+      "deepWorkDesc": "Focused time without distractions",
+      "planning": "Plan your day",
+      "planningDesc": "Set intentions for what matters most",
+      "digitalDetox": "Screen-free time",
+      "digitalDetoxDesc": "Step away from devices before bed",
+      "learning": "Learn something new",
+      "learningDesc": "Read, watch, or practice a skill"
+    },
+    "selfCare": {
+      "skincare": "Skincare routine",
+      "skincareDesc": "A small ritual of caring for yourself",
+      "reading": "Read for pleasure",
+      "readingDesc": "Lose yourself in a good book",
+      "nature": "Spend time outdoors",
+      "natureDesc": "Fresh air and natural light",
+      "creative": "Creative expression",
+      "creativeDesc": "Draw, write, play, or make something"
+    },
+    "social": {
+      "callFriend": "Reach out to someone",
+      "callFriendDesc": "A call, text, or visit to stay connected",
+      "listening": "Practice active listening",
+      "listeningDesc": "Be fully present in a conversation",
+      "compliment": "Give a genuine compliment",
+      "complimentDesc": "Brighten someone's day with kind words"
+    }
+  },
+  "stats": {
+    "title": "Your progress",
+    "week": "Week",
+    "month": "Month",
+    "sixMonths": "6 Months",
+    "year": "Year",
+    "completionRate": "Completion rate",
+    "currentStreak": "Current streak",
+    "bestStreak": "Best streak",
+    "totalDone": "Total done",
+    "perHabit": "Per habit",
+    "streak": "{count}d streak",
+    "best": "Best: {count}d",
+    "noData": "Complete some habits to see your progress",
+    "days": "days"
+  },
+  "icons": {
+    "heart": "Heart",
+    "sun": "Sun",
+    "flame": "Fire",
+    "moon": "Moon",
+    "leaf": "Leaf",
+    "star": "Star",
+    "mountain": "Mountain",
+    "energized": "Lightning",
+    "hopeful": "Seedling",
+    "neutral": "Horizon",
+    "low": "Cloud",
+    "anxious": "Waves",
+    "spiral": "Spiral",
+    "dumbbell": "Dumbbell",
+    "book": "Book",
+    "laptop": "Laptop",
+    "droplet": "Droplet",
+    "music": "Music",
+    "pen": "Pen",
+    "coffee": "Coffee",
+    "running": "Running"
+  }
+}
