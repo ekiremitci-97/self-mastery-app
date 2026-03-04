@@ -6,16 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ios:build": "vue-tsc --noEmit && vite build && npx cap sync ios",
+    "ios:open": "npx cap open ios",
+    "ios:run": "vue-tsc --noEmit && vite build && npx cap sync ios && npx cap open ios"
   },
   "dependencies": {
+    "@capacitor/core": "^8.1.0",
+    "@capacitor/ios": "^8.1.0",
     "@self-mastery/shared": "*",
-    "vue": "^3.5.0",
-    "vue-router": "^4.4.0",
     "pinia": "^2.2.0",
-    "vue-i18n": "^10.0.0"
+    "vue": "^3.5.0",
+    "vue-i18n": "^10.0.0",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.1.0",
     "@vitejs/plugin-vue": "^5.1.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",

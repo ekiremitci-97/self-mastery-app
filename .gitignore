@@ -26,3 +26,9 @@ Thumbs.db
 coverage/
 .vite/
 *.tsbuildinfo
+
+# Capacitor iOS
+frontend/ios/App/Pods/
+frontend/ios/App/App/public/
+frontend/ios/App/output/
+*.xcuserdatad
