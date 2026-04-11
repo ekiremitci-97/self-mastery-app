@@ -16,6 +16,6 @@ const formattedDate = computed(() => {
 
 <style scoped>
 .date-label {
-  @apply text-sm text-accent font-light tracking-wide;
+  @apply text-xs text-accent font-mono font-normal tracking-wide;
 }
 </style>

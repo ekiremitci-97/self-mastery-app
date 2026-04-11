@@ -9,3 +9,6 @@ export { default as AppSpinner } from './AppSpinner.vue';
 export { default as AppProgressRing } from './AppProgressRing.vue';
 export { default as AppCheckCircle } from './AppCheckCircle.vue';
 export { default as AppBarChart } from './AppBarChart.vue';
+export { default as AppTabPills } from './AppTabPills.vue';
+export { default as AppIconButton } from './AppIconButton.vue';
+export { default as RoutineSectionHeader } from './RoutineSectionHeader.vue';

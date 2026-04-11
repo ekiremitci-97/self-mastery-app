@@ -29,7 +29,7 @@ export async function generateQuote(
   const moodDescription = getMoodDescription(mood, customLabel, customDescription);
 
   const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-4.1-mini',
     messages: [
       {
         role: 'system',
@@ -38,18 +38,16 @@ export async function generateQuote(
 Rules:
 - Return a real, well-known quote from a real person (author, philosopher, leader, poet, etc.)
 - The quote should feel supportive and gentle, not preachy
-- Keep the quote concise (1-2 sentences max)
-- Respond ONLY in valid JSON format: {"text": "the quote here", "author": "Author Name"}
-- Do not include quotation marks inside the text field
-- Vary your selections, do not always pick the most famous quote`,
+- Keep the quote short (1 sentence, under 20 words)
+- Respond ONLY in JSON: {"text": "the quote", "author": "Author Name"}
+- Vary your selections`,
       },
       {
         role: 'user',
-        content: `I'm ${moodDescription}. Give me a quote that might help.`,
+        content: `I'm ${moodDescription}. Give me a short quote.`,
       },
     ],
-    temperature: 0.9,
-    max_tokens: 150,
+    max_tokens: 256,
   });
 
   const content = completion.choices[0]?.message?.content?.trim();

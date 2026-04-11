@@ -13,13 +13,13 @@ const timeOfDayKey = getTimeOfDayKey();
 
 onMounted(() => {
   if (localStorage.getItem(VISITED_KEY)) {
-    router.replace({ name: 'mood-select' });
+    router.replace({ name: 'garden' });
   }
 });
 
 const handleBegin = () => {
   localStorage.setItem(VISITED_KEY, '1');
-  router.push({ name: 'mood-select' });
+  router.push({ name: 'garden' });
 };
 </script>
 

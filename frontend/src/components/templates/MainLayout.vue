@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { AppHeartButton, AppDateLabel } from '@/components/atoms';
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { AppDateLabel } from '@/components/atoms';
+import { AppTabBar } from '@/components/molecules';
 import { getTimeOfDayKey } from '@/utils/greeting';
 
-const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
 
 const timeOfDay = getTimeOfDayKey();
 
@@ -16,21 +18,17 @@ const blobColors = computed(() => {
   };
   return palettes[timeOfDay];
 });
-const showEmptyMsg = ref(false);
-let hideTimer: ReturnType<typeof setTimeout>;
 
-const handleHeartClick = () => {
-  const raw = localStorage.getItem('self-mastery-saved-quotes');
-  const saved = raw ? JSON.parse(raw) : [];
+const showTabBar = computed(() => route.meta.showTabBar === true);
+const centerContent = computed(() => !showTabBar.value);
 
-  if (saved.length === 0) {
-    showEmptyMsg.value = true;
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => {
-      showEmptyMsg.value = false;
-    }, 2500);
+const activeTab = computed(() => route.name as string);
+
+function handleNavigate(tabName: string) {
+  if (tabName !== route.name) {
+    router.push({ name: tabName });
   }
-};
+}
 </script>
 
 <template>
@@ -43,22 +41,21 @@ const handleHeartClick = () => {
       class="ambient-blob ambient-blob--secondary"
       :style="{ background: `radial-gradient(circle, ${blobColors.secondary} 0%, transparent 70%)` }"
     />
-    <div class="main-layout__heart">
-      <AppHeartButton @click="handleHeartClick" />
-      <Transition name="toast">
-        <p v-if="showEmptyMsg" class="heart-toast">
-          {{ t('savedQuotes.empty') }}
-        </p>
-      </Transition>
-    </div>
 
     <main class="main-layout__content">
-      <div class="main-layout__inner">
+      <div :class="['main-layout__inner', { 'main-layout__inner--center': centerContent }]">
         <slot />
       </div>
     </main>
 
-    <footer class="main-layout__footer">
+    <footer v-if="showTabBar" class="main-layout__footer">
+      <AppTabBar
+        :active-tab="activeTab"
+        @navigate="handleNavigate"
+      />
+    </footer>
+
+    <footer v-else class="main-layout__footer-minimal">
       <AppDateLabel />
     </footer>
   </div>
@@ -66,7 +63,7 @@ const handleHeartClick = () => {
 
 <style scoped>
 .main-layout {
-  @apply h-screen flex flex-col items-center justify-between px-6 py-8 relative overflow-hidden;
+  @apply h-screen flex flex-col items-center px-5 pt-4 relative overflow-hidden;
 }
 
 .ambient-blob {
@@ -92,10 +89,6 @@ const handleHeartClick = () => {
   opacity: 0.18;
 }
 
-.main-layout__heart {
-  @apply absolute top-6 right-6 z-10;
-}
-
 .main-layout__content {
   @apply w-full max-w-md flex flex-col items-center flex-1 z-10 overflow-y-auto;
   scrollbar-width: none;
@@ -106,35 +99,23 @@ const handleHeartClick = () => {
 }
 
 .main-layout__inner {
-  @apply w-full flex flex-col items-center;
+  @apply w-full flex flex-col flex-1 py-2;
+  min-height: 0;
+}
+
+.main-layout__inner--center {
+  @apply items-center flex-initial;
   margin-top: auto;
   margin-bottom: auto;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .main-layout__footer {
+  @apply w-full max-w-md flex flex-col items-center z-10;
+}
+
+.main-layout__footer-minimal {
   @apply pt-6 pb-2 z-10;
-}
-
-.heart-toast {
-  @apply absolute right-0 top-12 mt-1 whitespace-nowrap text-xs text-text-secondary
-         bg-card border border-border rounded-xl px-3 py-2 shadow-sm;
-}
-
-.toast-enter-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.toast-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.toast-enter-from {
-  opacity: 0;
-  transform: translateY(-4px);
-}
-
-.toast-leave-to {
-  opacity: 0;
-  transform: translateY(-4px);
 }
 </style>

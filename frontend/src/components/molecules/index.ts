@@ -1,4 +1,14 @@
 export { default as MoodCard } from './MoodCard.vue';
-export { default as HabitCard } from './HabitCard.vue';
+export { default as MoodQuadrant } from './MoodQuadrant.vue';
+export { default as EmotionGrid } from './EmotionGrid.vue';
+export { default as HabitCardCompact } from './HabitCardCompact.vue';
+export { default as HabitOverflowMenu } from './HabitOverflowMenu.vue';
+export { default as RoutineDashboard } from './RoutineDashboard.vue';
+export { default as RoutineMiniStats } from './RoutineMiniStats.vue';
+export { default as RoutineEmptyState } from './RoutineEmptyState.vue';
 export { default as HabitTemplatePicker } from './HabitTemplatePicker.vue';
 export { default as IconPicker } from './IconPicker.vue';
+export { default as ChatBubble } from './ChatBubble.vue';
+export { default as GuruInsightCard } from './GuruInsightCard.vue';
+export { default as GuruSetup } from './GuruSetup.vue';
+export { default as AppTabBar } from './AppTabBar.vue';

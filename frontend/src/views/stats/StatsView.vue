@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useHabitStats, type StatsPeriod } from '@/composables/useHabitStats';
-import { AppBarChart, AppCard, AppProgressRing, AppMoodIcon } from '@/components/atoms';
+import { AppBarChart, AppCard, AppProgressRing, AppMoodIcon, AppTabPills, AppIconButton } from '@/components/atoms';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -16,39 +16,34 @@ const {
   perHabitStats,
 } = useHabitStats();
 
-const periods: { key: StatsPeriod; labelKey: string }[] = [
-  { key: 'week', labelKey: 'stats.week' },
-  { key: 'month', labelKey: 'stats.month' },
-  { key: '6m', labelKey: 'stats.sixMonths' },
-  { key: 'year', labelKey: 'stats.year' },
+const periodTabs = [
+  { key: 'week', label: t('stats.week') },
+  { key: 'month', label: t('stats.month') },
+  { key: '6m', label: t('stats.sixMonths') },
+  { key: 'year', label: t('stats.year') },
 ];
 
 const handleBack = () => {
-  router.push({ name: 'habits' });
+  router.back();
 };
 </script>
 
 <template>
   <div class="stats-view">
     <nav class="stats-view__nav">
-      <button class="stats-view__back" @click="handleBack">
+      <AppIconButton size="sm" @click="handleBack">
         <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4">
           <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </button>
+      </AppIconButton>
       <h1 class="stats-view__title">{{ t('stats.title') }}</h1>
     </nav>
 
-    <div class="stats-view__tabs">
-      <button
-        v-for="period in periods"
-        :key="period.key"
-        :class="['tab-pill', { 'tab-pill--active': activePeriod === period.key }]"
-        @click="activePeriod = period.key"
-      >
-        {{ t(period.labelKey) }}
-      </button>
-    </div>
+    <AppTabPills
+      :tabs="periodTabs"
+      :active-key="activePeriod"
+      @select="activePeriod = $event as StatsPeriod"
+    />
 
     <template v-if="perHabitStats.length > 0">
       <AppCard class="stats-view__chart-card">
@@ -120,32 +115,8 @@ const handleBack = () => {
   @apply flex items-center gap-3 mb-2;
 }
 
-.stats-view__back {
-  @apply w-8 h-8 rounded-full flex items-center justify-center
-         text-text-secondary hover:text-accent hover:bg-card-hover
-         transition-colors cursor-pointer;
-}
-
 .stats-view__title {
   @apply text-xl font-bold font-serif text-text-primary;
-}
-
-.stats-view__tabs {
-  @apply flex items-center gap-2;
-}
-
-.tab-pill {
-  @apply px-4 py-1.5 text-xs font-medium rounded-pill border border-border
-         bg-transparent text-text-secondary transition-all cursor-pointer;
-}
-
-.tab-pill--active {
-  @apply text-white border-transparent;
-  background-color: #C4A96A;
-}
-
-.tab-pill:not(.tab-pill--active):hover {
-  @apply bg-card-hover;
 }
 
 .stats-view__chart-card {
@@ -165,11 +136,11 @@ const handleBack = () => {
 }
 
 .stats-view__stat-value {
-  @apply text-lg font-bold font-serif text-text-primary;
+  @apply text-lg font-bold font-mono text-text-primary;
 }
 
 .stats-view__stat-label {
-  @apply text-[11px] text-text-muted;
+  @apply text-[11px] text-text-muted font-mono;
 }
 
 .stats-view__stat-grid {
@@ -185,7 +156,7 @@ const handleBack = () => {
 }
 
 .stats-view__section-title {
-  @apply text-xs font-semibold text-text-muted uppercase tracking-wider mb-1;
+  @apply text-[11px] font-medium text-text-muted font-mono uppercase tracking-wider mb-1;
 }
 
 .stats-view__habits {
@@ -214,7 +185,7 @@ const handleBack = () => {
 }
 
 .habit-stat-card__rate {
-  @apply text-sm font-bold font-serif;
+  @apply text-sm font-bold font-mono;
   color: #C4A96A;
 }
 
@@ -230,6 +201,6 @@ const handleBack = () => {
 }
 
 .habit-stat-card__meta {
-  @apply flex items-center gap-3 text-[11px] text-text-muted;
+  @apply flex items-center gap-3 text-[11px] text-text-muted font-mono;
 }
 </style>

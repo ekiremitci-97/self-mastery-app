@@ -2,8 +2,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { AppButton, AppBadge, AppSpinner, AppMoodIcon } from '@/components/atoms';
-import { MOOD_OPTIONS, type MoodType } from '@self-mastery/shared';
+import { AppButton, AppSpinner } from '@/components/atoms';
+import { EMOTIONS, getQuadrantById, type QuadrantId } from '@self-mastery/shared';
 import { getTimeOfDayKey } from '@/utils/greeting';
 
 const STORAGE_KEY = 'self-mastery-saved-quotes';
@@ -13,25 +13,16 @@ const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 
-const mood = computed(() => route.params.mood as string);
-const isCustom = computed(() => mood.value === 'custom');
-const customLabel = computed(() => (route.query.label as string) || '');
-const customDescription = computed(() => (route.query.description as string) || '');
-const moodOption = computed(() => MOOD_OPTIONS.find(m => m.type === mood.value));
+const emotionId = computed(() => route.params.mood as string);
+const quadrantId = computed(() => (route.query.quadrant as QuadrantId) || 'low-pleasant');
+const emotion = computed(() => EMOTIONS.find(e => e.id === emotionId.value));
+const quadrant = computed(() => getQuadrantById(quadrantId.value));
 
 const badgeLabel = computed(() => {
-  if (isCustom.value) {
-    return t('quote.feeling', { mood: customLabel.value.toLowerCase() });
+  if (emotion.value) {
+    return t('quote.feeling', { mood: t(emotion.value.labelKey).toLowerCase() });
   }
-  if (moodOption.value) {
-    return t('quote.feeling', { mood: t(moodOption.value.labelKey).toLowerCase() });
-  }
-  return '';
-});
-
-const badgeIconMood = computed(() => {
-  if (isCustom.value) return 'other';
-  return mood.value as MoodType;
+  return t('quote.feeling', { mood: emotionId.value });
 });
 
 const isSaved = ref(false);
@@ -43,10 +34,9 @@ const fetchQuote = async () => {
   isLoading.value = true;
   error.value = null;
 
-  const body: Record<string, string> = { mood: mood.value };
-  if (isCustom.value) {
-    body.customLabel = customLabel.value;
-    body.customDescription = customDescription.value;
+  const body: Record<string, string> = { mood: emotionId.value };
+  if (quadrantId.value) {
+    body.quadrant = quadrantId.value;
   }
 
   try {
@@ -75,7 +65,7 @@ onMounted(fetchQuote);
 
 const handleSave = () => {
   const raw = localStorage.getItem(STORAGE_KEY);
-  const saved: Array<{ text: string; author: string; mood: string; date: string }> = raw ? JSON.parse(raw) : [];
+  const saved: Array<{ text: string; author: string; mood: string; quadrant: string; date: string }> = raw ? JSON.parse(raw) : [];
 
   if (isSaved.value) {
     const idx = saved.findIndex(q => q.text === quote.value.text && q.author === quote.value.author);
@@ -86,7 +76,8 @@ const handleSave = () => {
     saved.push({
       text: quote.value.text,
       author: quote.value.author,
-      mood: mood.value,
+      mood: emotionId.value,
+      quadrant: quadrantId.value,
       date: new Date().toISOString(),
     });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
@@ -106,22 +97,27 @@ const continueLabel = computed(() => {
 });
 
 const handleContinue = () => {
-  router.push('/habits');
+  router.push({ name: 'routine' });
 };
 
 const handleChangeMood = () => {
-  router.push({ name: 'mood-select' });
+  router.push({ name: 'garden' });
 };
 </script>
 
 <template>
   <div class="quote-view">
-    <AppBadge v-if="badgeLabel">
-      <template #icon>
-        <AppMoodIcon :mood="badgeIconMood" size="sm" bare />
-      </template>
+    <div
+      v-if="quadrant"
+      class="quote-view__badge"
+      :style="{ background: quadrant.color + '18', color: quadrant.color, borderColor: quadrant.color + '30' }"
+    >
+      <span
+        class="quote-view__badge-dot"
+        :style="{ backgroundColor: quadrant.color }"
+      />
       {{ badgeLabel }}
-    </AppBadge>
+    </div>
 
     <div class="quote-view__divider" />
 
@@ -193,12 +189,20 @@ const handleChangeMood = () => {
   @apply flex flex-col items-center gap-6 text-center;
 }
 
+.quote-view__badge {
+  @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill text-xs font-medium border;
+}
+
+.quote-view__badge-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
 .quote-view__divider {
   @apply w-12 h-px bg-border;
 }
 
 .quote-view__text {
-  @apply text-2xl md:text-3xl font-bold font-serif text-text-primary leading-relaxed;
+  @apply text-xl md:text-2xl font-medium font-serif text-text-primary leading-relaxed max-w-md;
 }
 
 .quote-view__author {

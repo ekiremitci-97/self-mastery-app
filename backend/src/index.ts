@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import quotesRouter from './routes/quotes.js';
+import guruRouter from './routes/guru.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -14,6 +15,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/quotes', quotesRouter);
+app.use('/api/guru', guruRouter);
 
 app.listen(PORT, () => {
   console.log(`Self-Mastery API running on port ${PORT}`);
